@@ -33,6 +33,19 @@
 		81D51F3A1B6181C2000DA084 /* CodePushConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 81D51F391B6181C2000DA084 /* CodePushConfig.m */; };
 		8482F84C1E24C58300F793DB /* CodePush.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 13BE3DEC1AC21097009241FE /* CodePush.h */; };
 		8482F84E1E24C66300F793DB /* CodePush.h in Headers */ = {isa = PBXBuildFile; fileRef = 13BE3DEC1AC21097009241FE /* CodePush.h */; };
+		B29B78D51E9C927200603FB1 /* DiffMatchPatch.h in Headers */ = {isa = PBXBuildFile; fileRef = B29B78C81E9C927200603FB1 /* DiffMatchPatch.h */; };
+		B29B78D61E9C927200603FB1 /* DiffMatchPatch.m in Sources */ = {isa = PBXBuildFile; fileRef = B29B78C91E9C927200603FB1 /* DiffMatchPatch.m */; };
+		B29B78D71E9C927200603FB1 /* DiffMatchPatchCFUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = B29B78CA1E9C927200603FB1 /* DiffMatchPatchCFUtilities.h */; };
+		B29B78D81E9C927200603FB1 /* DiffMatchPatchCFUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = B29B78CB1E9C927200603FB1 /* DiffMatchPatchCFUtilities.m */; };
+		B29B78D91E9C927200603FB1 /* DiffMatchPatchInternals.h in Headers */ = {isa = PBXBuildFile; fileRef = B29B78CC1E9C927200603FB1 /* DiffMatchPatchInternals.h */; };
+		B29B78DA1E9C927200603FB1 /* DMDiff.h in Headers */ = {isa = PBXBuildFile; fileRef = B29B78CD1E9C927200603FB1 /* DMDiff.h */; };
+		B29B78DB1E9C927200603FB1 /* DMDiff.m in Sources */ = {isa = PBXBuildFile; fileRef = B29B78CE1E9C927200603FB1 /* DMDiff.m */; };
+		B29B78DC1E9C927200603FB1 /* DMPatch.h in Headers */ = {isa = PBXBuildFile; fileRef = B29B78CF1E9C927200603FB1 /* DMPatch.h */; };
+		B29B78DD1E9C927200603FB1 /* DMPatch.m in Sources */ = {isa = PBXBuildFile; fileRef = B29B78D01E9C927200603FB1 /* DMPatch.m */; };
+		B29B78DE1E9C927200603FB1 /* NSString+EscapeHTMLCharacters.h in Headers */ = {isa = PBXBuildFile; fileRef = B29B78D11E9C927200603FB1 /* NSString+EscapeHTMLCharacters.h */; };
+		B29B78DF1E9C927200603FB1 /* NSString+EscapeHTMLCharacters.m in Sources */ = {isa = PBXBuildFile; fileRef = B29B78D21E9C927200603FB1 /* NSString+EscapeHTMLCharacters.m */; };
+		B29B78E01E9C927200603FB1 /* NSString+UriCompatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = B29B78D31E9C927200603FB1 /* NSString+UriCompatibility.h */; };
+		B29B78E11E9C927200603FB1 /* NSString+UriCompatibility.m in Sources */ = {isa = PBXBuildFile; fileRef = B29B78D41E9C927200603FB1 /* NSString+UriCompatibility.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -94,6 +107,19 @@
 		54FFEDDF1BF550630061DD23 /* CodePushDownloadHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CodePushDownloadHandler.m; path = CodePush/CodePushDownloadHandler.m; sourceTree = "<group>"; };
 		810D4E6C1B96935000B397E9 /* CodePushPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CodePushPackage.m; path = CodePush/CodePushPackage.m; sourceTree = "<group>"; };
 		81D51F391B6181C2000DA084 /* CodePushConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CodePushConfig.m; path = CodePush/CodePushConfig.m; sourceTree = "<group>"; };
+		B29B78C81E9C927200603FB1 /* DiffMatchPatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiffMatchPatch.h; sourceTree = "<group>"; };
+		B29B78C91E9C927200603FB1 /* DiffMatchPatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiffMatchPatch.m; sourceTree = "<group>"; };
+		B29B78CA1E9C927200603FB1 /* DiffMatchPatchCFUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiffMatchPatchCFUtilities.h; sourceTree = "<group>"; };
+		B29B78CB1E9C927200603FB1 /* DiffMatchPatchCFUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiffMatchPatchCFUtilities.m; sourceTree = "<group>"; };
+		B29B78CC1E9C927200603FB1 /* DiffMatchPatchInternals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiffMatchPatchInternals.h; sourceTree = "<group>"; };
+		B29B78CD1E9C927200603FB1 /* DMDiff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMDiff.h; sourceTree = "<group>"; };
+		B29B78CE1E9C927200603FB1 /* DMDiff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMDiff.m; sourceTree = "<group>"; };
+		B29B78CF1E9C927200603FB1 /* DMPatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMPatch.h; sourceTree = "<group>"; };
+		B29B78D01E9C927200603FB1 /* DMPatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMPatch.m; sourceTree = "<group>"; };
+		B29B78D11E9C927200603FB1 /* NSString+EscapeHTMLCharacters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+EscapeHTMLCharacters.h"; sourceTree = "<group>"; };
+		B29B78D21E9C927200603FB1 /* NSString+EscapeHTMLCharacters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+EscapeHTMLCharacters.m"; sourceTree = "<group>"; };
+		B29B78D31E9C927200603FB1 /* NSString+UriCompatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UriCompatibility.h"; sourceTree = "<group>"; };
+		B29B78D41E9C927200603FB1 /* NSString+UriCompatibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UriCompatibility.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,9 +212,31 @@
 				540D20111C7684FE00D6EF41 /* CodePushUpdateUtils.m */,
 				1B23B9131BF9267B000BB2F0 /* RCTConvert+CodePushInstallMode.m */,
 				1BCC09A61CC19EB700DDC0DD /* RCTConvert+CodePushUpdateState.m */,
+				B29B78C71E9C927200603FB1 /* DiffMatchPatch */,
 				54A002481C0E2880004C3CEC /* SSZipArchive */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		B29B78C71E9C927200603FB1 /* DiffMatchPatch */ = {
+			isa = PBXGroup;
+			children = (
+				B29B78C81E9C927200603FB1 /* DiffMatchPatch.h */,
+				B29B78C91E9C927200603FB1 /* DiffMatchPatch.m */,
+				B29B78CA1E9C927200603FB1 /* DiffMatchPatchCFUtilities.h */,
+				B29B78CB1E9C927200603FB1 /* DiffMatchPatchCFUtilities.m */,
+				B29B78CC1E9C927200603FB1 /* DiffMatchPatchInternals.h */,
+				B29B78CD1E9C927200603FB1 /* DMDiff.h */,
+				B29B78CE1E9C927200603FB1 /* DMDiff.m */,
+				B29B78CF1E9C927200603FB1 /* DMPatch.h */,
+				B29B78D01E9C927200603FB1 /* DMPatch.m */,
+				B29B78D11E9C927200603FB1 /* NSString+EscapeHTMLCharacters.h */,
+				B29B78D21E9C927200603FB1 /* NSString+EscapeHTMLCharacters.m */,
+				B29B78D31E9C927200603FB1 /* NSString+UriCompatibility.h */,
+				B29B78D41E9C927200603FB1 /* NSString+UriCompatibility.m */,
+			);
+			name = DiffMatchPatch;
+			path = CodePush/DiffMatchPatch;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -198,7 +246,14 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B29B78DC1E9C927200603FB1 /* DMPatch.h in Headers */,
+				B29B78D71E9C927200603FB1 /* DiffMatchPatchCFUtilities.h in Headers */,
+				B29B78D91E9C927200603FB1 /* DiffMatchPatchInternals.h in Headers */,
+				B29B78DE1E9C927200603FB1 /* NSString+EscapeHTMLCharacters.h in Headers */,
+				B29B78D51E9C927200603FB1 /* DiffMatchPatch.h in Headers */,
 				8482F84E1E24C66300F793DB /* CodePush.h in Headers */,
+				B29B78E01E9C927200603FB1 /* NSString+UriCompatibility.h in Headers */,
+				B29B78DA1E9C927200603FB1 /* DMDiff.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +298,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				English,
 			);
 			mainGroup = 58B511D21A9E6C8500147676;
 			productRefGroup = 58B511D21A9E6C8500147676;
@@ -260,6 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				54A0026D1C0E2880004C3CEC /* aeskey.c in Sources */,
+				B29B78D81E9C927200603FB1 /* DiffMatchPatchCFUtilities.m in Sources */,
 				540D20121C7684FE00D6EF41 /* CodePushUpdateUtils.m in Sources */,
 				54A0026E1C0E2880004C3CEC /* aestab.c in Sources */,
 				54A002761C0E2880004C3CEC /* mztools.c in Sources */,
@@ -272,14 +329,19 @@
 				54FFEDE01BF550630061DD23 /* CodePushDownloadHandler.m in Sources */,
 				54A002711C0E2880004C3CEC /* hmac.c in Sources */,
 				54A002721C0E2880004C3CEC /* prng.c in Sources */,
+				B29B78D61E9C927200603FB1 /* DiffMatchPatch.m in Sources */,
 				5421FE311C58AD5A00986A55 /* CodePushTelemetryManager.m in Sources */,
 				54A002731C0E2880004C3CEC /* pwd2key.c in Sources */,
 				54A002751C0E2880004C3CEC /* ioapi.c in Sources */,
+				B29B78DF1E9C927200603FB1 /* NSString+EscapeHTMLCharacters.m in Sources */,
 				54A002771C0E2880004C3CEC /* unzip.c in Sources */,
 				54A0026F1C0E2880004C3CEC /* entropy.c in Sources */,
 				13BE3DEE1AC21097009241FE /* CodePush.m in Sources */,
+				B29B78DD1E9C927200603FB1 /* DMPatch.m in Sources */,
+				B29B78E11E9C927200603FB1 /* NSString+UriCompatibility.m in Sources */,
 				54A0026C1C0E2880004C3CEC /* aescrypt.c in Sources */,
 				1B762E901C9A5E9A006EF800 /* CodePushErrorUtils.m in Sources */,
+				B29B78DB1E9C927200603FB1 /* DMDiff.m in Sources */,
 				54A002701C0E2880004C3CEC /* fileenc.c in Sources */,
 				5498D8F61D21F14100B5EB43 /* CodePushUtils.m in Sources */,
 				810D4E6D1B96935000B397E9 /* CodePushPackage.m in Sources */,

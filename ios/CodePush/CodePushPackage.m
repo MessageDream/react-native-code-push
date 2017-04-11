@@ -1,5 +1,6 @@
 #import "CodePush.h"
 #import "SSZipArchive.h"
+#import "DiffMatchPatch.h"
 
 @implementation CodePushPackage
 
@@ -61,7 +62,7 @@ static NSString *const UnzippedFolderName = @"unzipped";
                                   withIntermediateDirectories:YES
                                                    attributes:nil
                                                         error:&error];
-                                                        
+        
         // Ensure that none of the CodePush updates we store on disk are
         // ever included in the end users iTunes and/or iCloud backups
         NSURL *codePushURL = [NSURL fileURLWithPath:[self getCodePushPath]];
@@ -119,6 +120,7 @@ static NSString *const UnzippedFolderName = @"unzipped";
                                                             if (currentPackageFolderPath == nil) {
                                                                 // Currently running the binary version, copy files from the bundled resources
                                                                 NSString *newUpdateCodePushPath = [newUpdateFolderPath stringByAppendingPathComponent:[CodePushUpdateUtils manifestFolderPrefix]];
+                                                                //NSString *newUpdateCodePushPath = newUpdateFolderPath;
                                                                 [[NSFileManager defaultManager] createDirectoryAtPath:newUpdateCodePushPath
                                                                                           withIntermediateDirectories:YES
                                                                                                            attributes:nil
@@ -143,6 +145,7 @@ static NSString *const UnzippedFolderName = @"unzipped";
                                                                     failCallback(error);
                                                                     return;
                                                                 }
+                                                                
                                                             } else {
                                                                 [[NSFileManager defaultManager] copyItemAtPath:currentPackageFolderPath
                                                                                                         toPath:newUpdateFolderPath
@@ -167,14 +170,63 @@ static NSString *const UnzippedFolderName = @"unzipped";
                                                                                                                          options:kNilOptions
                                                                                                                            error:&error];
                                                             NSArray *deletedFiles = manifestJSON[@"deletedFiles"];
-                                                            for (NSString *deletedFileName in deletedFiles) {
-                                                                NSString *absoluteDeletedFilePath = [newUpdateFolderPath stringByAppendingPathComponent:deletedFileName];
-                                                                if ([[NSFileManager defaultManager] fileExistsAtPath:absoluteDeletedFilePath]) {
-                                                                    [[NSFileManager defaultManager] removeItemAtPath:absoluteDeletedFilePath
-                                                                                                               error:&error];
-                                                                    if (error) {
-                                                                        failCallback(error);
-                                                                        return;
+                                                            if ([deletedFiles isKindOfClass:[NSArray class]]){
+                                                                for (NSString *deletedFileName in deletedFiles) {
+                                                                    NSString *absoluteDeletedFilePath = [newUpdateFolderPath stringByAppendingPathComponent:deletedFileName];
+                                                                    if ([[NSFileManager defaultManager] fileExistsAtPath:absoluteDeletedFilePath]) {
+                                                                        [[NSFileManager defaultManager] removeItemAtPath:absoluteDeletedFilePath
+                                                                                                                   error:&error];
+                                                                        if (error) {
+                                                                            failCallback(error);
+                                                                            return;
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                            
+                                                            NSArray *patchFiles = manifestJSON[@"patchFiles"];
+                                                            if ([patchFiles isKindOfClass:[NSArray class]]){
+                                                                for (NSString *patchFileName in patchFiles) {
+                                                                    
+                                                                    NSString *originalFileName = [patchFileName stringByReplacingOccurrencesOfString:@".patch" withString:@""];
+                                                                    NSString *absoluteOrignalFilePath = [newUpdateFolderPath stringByAppendingPathComponent:originalFileName];
+                                                                    
+                                                                    NSString *absolutePatchFilePath = [unzippedFolderPath stringByAppendingPathComponent:patchFileName];
+                                                                    
+                                                                    if ([[NSFileManager defaultManager] fileExistsAtPath:absoluteOrignalFilePath]
+                                                                        && [[NSFileManager defaultManager] fileExistsAtPath:absolutePatchFilePath]) {
+                                                                        
+                                                                        NSString *originalText = [NSString stringWithContentsOfFile:absoluteOrignalFilePath encoding:NSUTF8StringEncoding error:&error];
+                                                                        if (error) {
+                                                                            failCallback(error);
+                                                                            return;
+                                                                        }
+                                                                        
+                                                                        NSString *patchText = [NSString stringWithContentsOfFile:absolutePatchFilePath encoding:NSUTF8StringEncoding error:&error];
+                                                                        if (error) {
+                                                                            failCallback(error);
+                                                                            return;
+                                                                        }
+                                                                        
+                                                                        NSArray *patches = patch_parsePatchesFromText(patchText, &error);
+                                                                        if (error) {
+                                                                            failCallback(error);
+                                                                            return;
+                                                                        }
+                                                                        
+                                                                        NSString *resultText = patch_applyPatchesToText(patches, originalText, NULL);
+                                                                        
+                                                                        [resultText writeToFile:absoluteOrignalFilePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
+                                                                        if (error) {
+                                                                            failCallback(error);
+                                                                            return;
+                                                                        }
+                                                                        [[NSFileManager defaultManager] removeItemAtPath:absolutePatchFilePath
+                                                                                                                   error:&error];
+                                                                        if (error) {
+                                                                            failCallback(error);
+                                                                            return;
+                                                                        }
                                                                     }
                                                                 }
                                                             }
@@ -296,7 +348,7 @@ static NSString *const UnzippedFolderName = @"unzipped";
     if (!packageHash) {
         return nil;
     }
-
+    
     return [CodePushPackage getPackage:packageHash error:error];
 }
 
@@ -452,7 +504,7 @@ static NSString *const UnzippedFolderName = @"unzipped";
         // The current package is already the one being installed, so we should no-op.
         return YES;
     }
-
+    
     if (removePendingUpdate) {
         NSString *currentPackageFolderPath = [self getCurrentPackageFolderPath:error];
         if (currentPackageFolderPath) {
@@ -493,7 +545,7 @@ static NSString *const UnzippedFolderName = @"unzipped";
         return;
     }
     
-    NSString *currentPackageFolderPath = [self getCurrentPackageFolderPath:&error];        
+    NSString *currentPackageFolderPath = [self getCurrentPackageFolderPath:&error];
     if (!currentPackageFolderPath) {
         CPLog(@"Error getting current package folder path: %@", error);
         return;
@@ -501,7 +553,7 @@ static NSString *const UnzippedFolderName = @"unzipped";
     
     NSError *deleteError;
     BOOL result = [[NSFileManager defaultManager] removeItemAtPath:currentPackageFolderPath
-                                               error:&deleteError];
+                                                             error:&deleteError];
     if (!result) {
         CPLog(@"Error deleting current package contents at %@ error %@", currentPackageFolderPath, deleteError);
     }
@@ -521,14 +573,14 @@ static NSString *const UnzippedFolderName = @"unzipped";
     if (!packageInfoData) {
         return NO;
     }
-
+    
     NSString *packageInfoString = [[NSString alloc] initWithData:packageInfoData
                                                         encoding:NSUTF8StringEncoding];
     BOOL result = [packageInfoString writeToFile:[self getStatusFilePath]
-                        atomically:YES
-                          encoding:NSUTF8StringEncoding
-                             error:error];
-
+                                      atomically:YES
+                                        encoding:NSUTF8StringEncoding
+                                           error:error];
+    
     if (!result) {
         return NO;
     }

@@ -4,13 +4,13 @@ package = JSON.parse(File.read(File.join(__dir__, 'package.json')))
 
 Pod::Spec.new do |s|
 
-  s.name           = 'CodePush'
+  s.name           = 'CodePush-Goby'
   s.version        = package['version'].gsub(/v|-beta/, '')
   s.summary        = package['description']
   s.author         = package['author']
   s.license        = package['license']
   s.homepage       = package['homepage']
-  s.source         = { :git => 'https://github.com/Microsoft/react-native-code-push.git', :tag => "v#{s.version}-beta"}
+  s.source         = { :git => 'https://github.com/MessageDream/react-native-code-push.git', :tag => "v#{s.version}-beta"}
   s.platform       = :ios, '7.0'
   s.preserve_paths = '*.js'
   s.library        = 'z'
@@ -25,6 +25,11 @@ Pod::Spec.new do |s|
   s.subspec 'SSZipArchive' do |ss|
     ss.source_files = 'ios/CodePush/SSZipArchive/*.{h,m}', 'ios/CodePush/SSZipArchive/aes/*.{h,c}', 'ios/CodePush/SSZipArchive/minizip/*.{h,c}'
     ss.private_header_files = 'ios/CodePush/SSZipArchive/*.h', 'ios/CodePush/SSZipArchive/aes/*.h', 'ios/CodePush/SSZipArchive/minizip/*.h'
+  end
+
+  s.subspec 'DiffMatchPatch' do |ss|
+    ss.source_files = 'ios/CodePush/DiffMatchPatch/*.{h,m}'
+    ss.private_header_files = 'ios/CodePush/DiffMatchPatch/*.h'
   end
 
 end
