@@ -10,16 +10,39 @@ namespace CodePush.ReactNative
 {
     internal class UpdateUtils
     {
+        // internal async static Task CopyNecessaryFilesFromCurrentPackageAsync(IFile diffManifestFile,IFolder unzipedPackageFolder, IFolder currentPackageFolder, IFolder newPackageFolder)
         internal async static Task CopyNecessaryFilesFromCurrentPackageAsync(IFile diffManifestFile, IFolder currentPackageFolder, IFolder newPackageFolder)
         {
             await FileUtils.MergeFoldersAsync(currentPackageFolder, newPackageFolder).ConfigureAwait(false);
             JObject diffManifest = await CodePushUtils.GetJObjectFromFileAsync(diffManifestFile).ConfigureAwait(false);
             var deletedFiles = (JArray)diffManifest["deletedFiles"];
-            foreach (string fileNameToDelete in deletedFiles)
+            if (deletedFiles != null)
             {
-                var fileToDelete = await newPackageFolder.GetFileAsync(fileNameToDelete).ConfigureAwait(false);
-                await fileToDelete.DeleteAsync().ConfigureAwait(false);
+                foreach (string fileNameToDelete in deletedFiles)
+                {
+                    var fileToDelete = await newPackageFolder.GetFileAsync(fileNameToDelete).ConfigureAwait(false);
+                    await fileToDelete.DeleteAsync().ConfigureAwait(false);
+                }
             }
+
+            // var patchedFiles = (JArray)diffManifest["patchedFiles"];
+            // if (patchedFiles != null)
+            // {
+            //     foreach (string fileNameToPatch in patchedFiles)
+            //     {
+            //         var patchFile = await unzipedPackageFolder.GetFileAsync(fileNameToPatch).ConfigureAwait(false);
+            //         var patchFileContent = await patchFile.ReadAllTextAsync().ConfigureAwait(false);
+
+            //         var bundleFile = await newPackageFolder.GetFileAsync(fileNameToPatch.Replace(".patch","")).ConfigureAwait(false);
+            //         var bundleFileContent = await bundleFile.ReadAllTextAsync().ConfigureAwait(false);
+
+            //         var dmp = new DiffMatchPatch();
+
+
+            //         var fileToDelete = await newPackageFolder.GetFileAsync(fileNameToPatch).ConfigureAwait(false);
+            //         await fileToDelete.DeleteAsync().ConfigureAwait(false);
+            //     }
+            // }
         }
 
         internal async static Task<string> FindJSBundleInUpdateContentsAsync(IFolder updateFolder, string expectedFileName)

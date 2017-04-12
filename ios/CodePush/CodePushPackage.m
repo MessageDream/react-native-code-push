@@ -184,7 +184,7 @@ static NSString *const UnzippedFolderName = @"unzipped";
                                                                 }
                                                             }
                                                             
-                                                            NSArray *patchFiles = manifestJSON[@"patchFiles"];
+                                                            NSArray *patchFiles = manifestJSON[@"patchedFiles"];
                                                             if ([patchFiles isKindOfClass:[NSArray class]]){
                                                                 for (NSString *patchFileName in patchFiles) {
                                                                     

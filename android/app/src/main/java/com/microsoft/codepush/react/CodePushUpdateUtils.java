@@ -17,6 +17,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 
 public class CodePushUpdateUtils {
 
@@ -67,16 +68,43 @@ public class CodePushUpdateUtils {
         return String.format("%064x", new java.math.BigInteger(1, hash));
     }
 
-    public static void copyNecessaryFilesFromCurrentPackage(String diffManifestFilePath, String currentPackageFolderPath, String newPackageFolderPath) throws IOException{
+    public static void copyNecessaryFilesFromCurrentPackage(String diffManifestFilePath, String unzipPackageFolderPath, String currentPackageFolderPath, String newPackageFolderPath) throws IOException{
         FileUtils.copyDirectoryContents(currentPackageFolderPath, newPackageFolderPath);
         JSONObject diffManifest = CodePushUtils.getJsonObjectFromFile(diffManifestFilePath);
         try {
             JSONArray deletedFiles = diffManifest.getJSONArray("deletedFiles");
-            for (int i = 0; i < deletedFiles.length(); i++) {
-                String fileNameToDelete = deletedFiles.getString(i);
-                File fileToDelete = new File(newPackageFolderPath, fileNameToDelete);
-                if (fileToDelete.exists()) {
-                    fileToDelete.delete();
+            if (deletedFiles != null){
+                for (int i = 0; i < deletedFiles.length(); i++) {
+                    String fileNameToDelete = deletedFiles.getString(i);
+                    File fileToDelete = new File(newPackageFolderPath, fileNameToDelete);
+                    if (fileToDelete.exists()) {
+                        fileToDelete.delete();
+                    }
+                }
+            }
+
+            JSonArray patchedFiles = diffManifest.getJSONArray("patchedFiles");
+            if(patchedFiles != null){
+                for(String fileNameToPatch : patchedFiles){
+                     String patchFilePath = CodePushUtils.appendPathComponent(unzipPackageFolderPath, appendPathComponent);
+                     String patchContent = FileUtils.readFileToString(patchFilePath);
+
+                     String bundleFilePatch = CodePushUtils.appendPathComponent(newPackageFolderPath, fileNameToPatch.replaceFirst(".patch", ""));
+                     String bundleContent = FileUtils.readFileToString(bundleFilePatch);
+
+                     diff_match_patch dmp = new diff_match_patch();
+                     LinkedList<diff_match_patch.Patch> patches = (LinkedList<Patch>)dmp.patch_fromText(patchContent);
+                     Object[] resultArray = dmp.patch_apply(patches, bundleContent);
+
+                     String resultBundleContent = (String)resultArray[0];
+
+                     FileUtils.writeStringToFile(resultBundleContent, bundleFilePatch);
+
+                     File fileToDelete = new File(patchFilePath);
+                     if (fileToDelete.exists()) {
+                         fileToDelete.delete();
+                     }
+
                 }
             }
         } catch (JSONException e) {
